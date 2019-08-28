@@ -1,0 +1,78 @@
+找到两个有序数组的中位数
+
+static float MergeList(int[] num1, int[] num2)
+        {
+            int count1 = num1.Length;
+            int count2 = num2.Length;
+            int[] nums = new int[count1 + count2];
+            if (count1 == 0)
+            {
+                if (count2 % 2 == 0)
+                {
+                    return (num1[count1 / 2] + num1[count1 / 2 - 1]) / 2;
+                }
+                else
+                {
+                    return num1[count1 / 2 - 1];
+                }
+            }
+            if (count2 == 0)
+            {
+                if (count1 % 2 == 0)
+                {
+                    return (num2[count2 / 2] + num2[count2 / 2 - 1]) / 2;
+                }
+                else
+                {
+                    return num2[count2 / 2 - 1];
+                }
+            }
+
+            int i = 0, j = 0;
+            int count = 0;
+
+            while ((count1 + count2) != count)
+            {
+                if (i == count1)
+                {
+                    while (j != count2)
+                    {
+                        nums[count++] = num2[j++];
+                    }
+                    break;
+                }
+                if (j == count2)
+                {
+                    while (i != count1)
+                    {
+                        nums[count++] = num1[i++];
+                    }
+                    break;
+                }
+
+                if (num1[i] < num2[j])
+                {
+                    nums[count++] = num1[i++];
+                }
+                else
+                {
+                    nums[count++] = num2[j++];
+                }
+            }
+            for (int k = 0; k < nums.Length; k++)
+            {
+                Console.WriteLine(  "--- " + nums[k]);
+            }
+
+            if (nums.Length % 2 == 0)
+            {
+                float r = (nums[nums.Length / 2] + nums[(nums.Length / 2) - 1]) / 2;
+                return r; 
+            }
+            else
+            {
+                return nums[nums.Length / 2 - 1];
+            }
+        }
+        
+        简单粗暴，先将两个数组合并，两个有序数组的合并也是归并排序中的一部分。然后根据奇数，还是偶数，返回中位数。
